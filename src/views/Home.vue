@@ -1,40 +1,33 @@
 <template>
   <div class="home">
     <h1>arek blog</h1>
-    <input type="text" v-model="search" />
-    <p>search term: {{ search }}</p>
-    <div v-for="name in matchingNames" :key="name">
-      {{ name }}
-    </div>
-    <button @click="handleClick">stop watching</button>
+    <PostList :posts="posts" />
   </div>
 </template>
 
 <script>
-import { computed, ref, watch, watchEffect } from "vue";
+import PostList from "../components/PostList";
+import { ref } from "vue";
 export default {
   name: "Home",
+  components: { PostList },
   setup() {
-    const search = ref("");
-    const names = ref(["arek", "czarek", "marek", "darek", "jarek"]);
+    const posts = ref([
+      {
+        title: "Welcome to the blog",
+        body:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam aliquid modi eos tempore maiores, labore quisquam eum consectetur suscipit hic! Minima sunt aliquid quae assumenda beatae vitae eaque numquam, tempora quas ab ex blanditiis reprehenderit minus nesciunt adipisci excepturi temporibus alias sapiente, quia facilis, necessitatibus dolore. Saepe, provident vitae, non ut est alias excepturi amet perferendis facere vel, nostrum laudantium hic dolorem ullam quasi repudiandae accusamus voluptas consequatur? Incidunt dolore nesciunt repellendus aut maiores maxime voluptatum sunt, rem eius, repudiandae laboriosam quasi totam, deserunt ea facilis similique beatae vero delectus perferendis ullam. Repudiandae non quo, sint laborum fugiat quia consectetur.",
+        id: 1,
+      },
+      {
+        title: "Top 5 css tips",
+        body:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam aliquid modi eos tempore maiores, labore quisquam eum consectetur suscipit hic! Minima sunt aliquid quae assumenda beatae vitae eaque numquam, tempora quas ab ex blanditiis reprehenderit minus nesciunt adipisci excepturi temporibus alias sapiente, quia facilis, necessitatibus dolore. Saepe, provident vitae, non ut est alias excepturi amet perferendis facere vel, nostrum laudantium hic dolorem ullam quasi repudiandae accusamus voluptas consequatur? Incidunt dolore nesciunt repellendus aut maiores maxime voluptatum sunt, rem eius, repudiandae laboriosam quasi totam, deserunt ea facilis similique beatae vero delectus perferendis ullam. Repudiandae non quo, sint laborum fugiat quia consectetur.",
+        id: 2,
+      },
+    ]);
 
-    const stopWatch = watch(search, () => {
-      console.log("watch");
-    });
-
-    const stopEffect = watchEffect(() => {
-      console.log("watchEffect", search.value);
-    });
-
-    const handleClick = () => {
-      stopWatch();
-      stopEffect();
-    };
-
-    const matchingNames = computed(() => {
-      return names.value.filter((name) => name.includes(search.value));
-    });
-    return { names, search, matchingNames, handleClick };
+    return { posts };
   },
 };
 </script>
