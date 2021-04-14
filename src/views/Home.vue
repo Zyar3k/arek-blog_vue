@@ -1,7 +1,9 @@
 <template>
   <div class="home">
     <h1>arek blog</h1>
-    <PostList :posts="posts" />
+    <PostList v-if="showPosts" :posts="posts" />
+    <button @click="handleClick">toggle post</button>
+    <button @click="posts.pop()">delete post</button>
   </div>
 </template>
 
@@ -27,7 +29,13 @@ export default {
       },
     ]);
 
-    return { posts };
+    const showPosts = ref(true);
+
+    const handleClick = () => {
+      showPosts.value = !showPosts.value;
+    };
+
+    return { posts, showPosts, handleClick };
   },
 };
 </script>
